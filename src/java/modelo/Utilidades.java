@@ -21,4 +21,18 @@ public class Utilidades {
         }
         return listaTiempo;
     }
+    
+    public static ArrayList<Cuota> generaListaCuotas(int num_cuotas, double importeTotalPrestamo) {
+        ArrayList<Cuota> listaCuotas = new ArrayList<Cuota>();
+        
+        for (int i = 1; i <= num_cuotas; i++) {
+            int importeCuota = (int) (importeTotalPrestamo / num_cuotas);
+            int intereses = importeCuota - (importeCuota*(i-1) / num_cuotas);
+            int capital = importeCuota - intereses;
+            Cuota c = new Cuota(i, importeCuota, capital,intereses);
+            listaCuotas.add(c);
+        }
+        
+        return listaCuotas;
+    }
 }

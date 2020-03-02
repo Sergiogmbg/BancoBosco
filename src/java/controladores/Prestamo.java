@@ -5,6 +5,7 @@
  */
 package controladores;
 
+import modelo.PrestamoObjeto;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Cuota;
 import modelo.Utilidades;
 
 /**
@@ -86,9 +88,12 @@ public class Prestamo extends HttpServlet {
         
         PrestamoObjeto pr = new PrestamoObjeto(Integer.parseInt(cantidad), Integer.parseInt(interes), Integer.parseInt(tiempo));
         
+        ArrayList<Cuota> listaCuotas = Utilidades.generaListaCuotas(pr.getTiempo(), pr.getImportePrestamo());
+        
         request.setAttribute("nombre", nombre);
         request.setAttribute("prestamo", pr);
         request.setAttribute("listaTiempo", listaTiempo);
+        request.setAttribute("listaCuotas", listaCuotas);
         request.getRequestDispatcher("prestamo.jsp").forward(request, response);
         
     }
