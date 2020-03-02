@@ -64,7 +64,7 @@
         </form>
         <h1>El Importe total es: <%= importePrestamo%></h1>
 
-        <table>
+        <table border="1">
             <% ArrayList<Cuota> listaCuotas = (ArrayList<Cuota>) request.getAttribute("listaCuotas");
                if (listaCuotas != null) { %>
             <tr><th>NºCuota</th><th>Importe</th><th>Capital</th><th>Interés</th>
