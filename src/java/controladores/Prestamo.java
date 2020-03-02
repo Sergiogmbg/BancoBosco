@@ -76,7 +76,21 @@ public class Prestamo extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        ArrayList<String> listaTiempo = Utilidades.generarLista();
+        
+        String nombre = request.getParameter("nombre");
+        String cantidad = request.getParameter("cantidad");
+        String interes = request.getParameter("interes");
+        String tiempo = request.getParameter("tiempo");
+        
+        PrestamoObjeto pr = new PrestamoObjeto(Integer.parseInt(cantidad), Integer.parseInt(interes), Integer.parseInt(tiempo));
+        
+        request.setAttribute("nombre", nombre);
+        request.setAttribute("prestamo", pr);
+        request.setAttribute("listaTiempo", listaTiempo);
+        request.getRequestDispatcher("prestamo.jsp").forward(request, response);
+        
     }
 
     /**

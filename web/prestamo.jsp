@@ -4,6 +4,7 @@
     Author     : DAW204
 --%>
 
+<%@page import="controladores.PrestamoObjeto"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,18 +16,50 @@
     <body>
         <h1>Banco Bosco</h1>
         <h2>Solicitud de préstamos</h2>
+        
+        <% ArrayList<String> listaTiempo = (ArrayList<String>) request.getAttribute("listaTiempo");
+                PrestamoObjeto pr = (PrestamoObjeto) request.getAttribute("prestamo");
+                String nombre = (String) request.getAttribute("nombre");
+                
+                String cantidad;
+                String interes;
+                String tiempo;
+                String importePrestamo;
+                
+                if (nombre == null) {
+                    nombre = "";
+                }
+                
+                if (pr == null) {
+                    importePrestamo = "";
+                    cantidad = "0";
+                    interes = "0";
+                    tiempo = "12";
+                } else {
+                    importePrestamo = String.valueOf(pr.getImportePrestamo());
+                    cantidad = String.valueOf(pr.getCantidad());
+                    interes = String.valueOf(pr.getInteres());
+                    tiempo = String.valueOf(pr.getTiempo());
+                }
+            %>
+        
         <form action="" method="post">
-            Nombre: <input type="text" name="nombre">
-            Cantidad: <input type="text" name="cantidad">
-            Interés: <input type="text" name="interes">
-            
-            <% ArrayList<String> listaTiempo = (ArrayList<String>) request.getAttribute("listaTiempo"); %>
-            
-            <select>
-                <% for (int i = 0; i < listaTiempo.size(); i++) { %>
-                <option value="<%= listaTiempo.get(i) %>"><%= listaTiempo.get(i) %></option>
-                <% } %>
+            Nombre: <input type="text" name="nombre" value="<%= nombre %>">
+            Cantidad: <input type="text" name="cantidad" value="<%= cantidad %>">
+            Interés: <input type="text" name="interes" value="<%= interes %>">
+
+            <select name="tiempo">
+                <% for (int i = 0; i < listaTiempo.size(); i++) {
+                   String seleccionado = "";
+                   if (tiempo.equals(listaTiempo.get(i))) {
+                       seleccionado = "selected";
+                   }
+                %>
+                <option value="<%= listaTiempo.get(i)%>" <%= seleccionado %>><%= listaTiempo.get(i)%></option>
+                <% }%>
             </select>
+
+            <input type="submit" value="Enviar">
         </form>
     </body>
 </html>
